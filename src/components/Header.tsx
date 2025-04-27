@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useUserState } from '../state/user';
 import Navigation from './Navigation';
 import AuthNav from './AuthNav';
 import UserMenu from './UserMenu';
@@ -6,7 +7,7 @@ import UserMenu from './UserMenu';
 export interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const isLogin = false;
+  const { data: user } = useUserState();
 
   return (
     <header className="relative bg-green-main">
@@ -16,7 +17,7 @@ const Header: FC<HeaderProps> = () => {
         </p>
         <div className="flex items-center text-base leading-6 -tracking-1 gap-[217px]">
           <Navigation />
-          {isLogin ? <UserMenu /> : <AuthNav />}
+          {user?.isLoggedIn ? <UserMenu /> : <AuthNav />}
         </div>
       </div>
     </header>
