@@ -9,6 +9,7 @@
 
   --container-8xl: 90rem;
 
+  --tracking-0: 0em;
   --tracking-1: 0.01em;
   --tracking-2: 0.02em;
   --tracking-3: 0.03em;
@@ -25,21 +26,40 @@
   --color-black-main: #11101c;
   --color-white-main: #fbfbfb;
   --color-white-secondary: #ffffff;
+  --color-white-bg: #f3f3f3;
   --color-white-border: rgba(251, 251, 251, 0.4);
+  --color-red-border: rgba(240, 63, 59, 0.2);
+  --color-grey-text-main: #8a8a89;
   --color-grey-text: rgba(17, 16, 28, 0.5);
   --color-grey-input: rgba(17, 16, 28, 0.1);
+  --color-grey-border: rgba(17, 16, 28, 0.2);
   --color-green-main: #103931;
   --color-green-hover: rgba(16, 57, 49, 0.2);
+  --color-green-light: #38cd3e;
 }
 
 body {
-  font-family: var(--font-roboto);
+  font-family: var(--font-helvetica-neue);
   color: var(--color-black-main);
   background-color: var(--color-white-main);
 }
 
-button {
-  cursor: pointer;
+@layer base {
+  img,
+  video {
+    max-width: initial;
+    height: initial;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@utility center-position {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @utility primary-transition {
@@ -96,6 +116,13 @@ button {
   color: var(--color-white-main);
 }
 
+@utility section-container {
+  width: 1440px;
+  margin: 0 auto;
+  padding-left: 128px;
+  padding-right: 128px;
+}
+
 @utility current {
   content: '';
   position: absolute;
@@ -104,6 +131,15 @@ button {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+
+@utility border-after {
+  content: '';
+  position: absolute;
+  right: 0;
+  background-color: var(--color-grey-border);
+  height: 16px;
+  width: 1px;
 }
 
 @utility hero-bg-image {

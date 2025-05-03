@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { useUserState } from '../state/user';
-import { signIn } from '../firebase/authService';
+import { useUserState } from '../../state/user';
+import { signIn } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
-import { ISignInDto } from '../types/auth.types';
+import { ISignInDto } from '../../types/auth.types';
 import toast from 'react-hot-toast';
 
 export const useSignIn = () => {

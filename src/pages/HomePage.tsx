@@ -16,7 +16,8 @@ const HomePage: FC<HomePageProps> = () => {
   };
 
   return (
-    <main>
+    <main className="font-roboto">
+      <title>Home</title>
       <section className="home-section-container">
         <div className="absolute left-24 bottom-[163px] w-[517px] h-[322px] text-white-main">
           <h1 className="  text-[70px] font-medium leading-1 -tracking-3 mb-7">
@@ -48,12 +49,10 @@ const HomePage: FC<HomePageProps> = () => {
             <Icon name={'icon-fe_check'} width={30} height={30} />
           </span>
           <div className="flex flex-col gap-1.5">
-            <p className="text-base font-normal text-(--color-whire-text) leading-1">
+            <p className="text-base font-normal text-(--color-grey-text) leading-1">
               Experienced nannies
             </p>
-            <span className="text-2xl text-[#11101C] font-bold leading-1">
-              15,000
-            </span>
+            <span className="text-2xl font-bold leading-1">15,000</span>
           </div>
         </div>
       </section>

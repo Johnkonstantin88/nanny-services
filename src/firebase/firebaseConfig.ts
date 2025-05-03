@@ -1,16 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-
-interface FirebaseConfig {
-  apiKey: string;
-  authDomain: string;
-  databaseURL: string;
-  projectId: string;
-  storageBucket: string;
-  messagingSenderId: string;
-  appId: string;
-  measurementId: string;
-}
+import { getDatabase } from 'firebase/database';
+import { FirebaseConfig } from '../types/firebase.types';
 
 const firebaseConfig: FirebaseConfig = {
   apiKey: import.meta.env.VITE_WEB_API_KEY,
@@ -26,5 +17,6 @@ const firebaseConfig: FirebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 
-export { app, auth };
+export { app, auth, db };

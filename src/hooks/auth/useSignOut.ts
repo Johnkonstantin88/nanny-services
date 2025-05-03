@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { logOut } from '../firebase/authService';
+import { logOut } from '../../firebase/services/auth';
 
 export const useSignOut = () => {
   const queryCLient = useQueryClient();

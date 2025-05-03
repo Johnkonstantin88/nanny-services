@@ -9,7 +9,12 @@ const Navigation: FC<NavigationProps> = () => {
   const location = useLocation();
   const { data: user } = useUserState();
   return (
-    <nav className="flex gap-10 font-normal h-8">
+    <nav
+      className={clsx(
+        'flex gap-10 font-normal',
+        location.pathname !== '/' && 'h-8'
+      )}
+    >
       <NavLink to="/">Home</NavLink>
       <NavLink
         to="/nannies"
@@ -22,7 +27,7 @@ const Navigation: FC<NavigationProps> = () => {
       >
         Nannies
       </NavLink>
-      {location.pathname !== '/' && user && (
+      {location.pathname !== '/' && user?.isLoggedIn && (
         <NavLink
           to="/favorites"
           className={({ isActive }) =>

@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { queryClient, persister } from './utils/queryClient.ts';
+import { queryClient, persister } from './queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './components/App.tsx';
 import './index.css';

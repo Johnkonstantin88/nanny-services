@@ -4,23 +4,23 @@ import {
   updateProfile,
   signOut,
 } from 'firebase/auth';
-import { auth } from './firebase';
-import { ISignInDto, ISignUpDto } from '../types/auth.types';
+import { auth } from '../firebaseConfig';
+import { ISignInDto, ISignUpDto } from '../../types/auth.types';
 
 export const signUp = async ({ displayName, email, password }: ISignUpDto) => {
-  const userCredentials = await createUserWithEmailAndPassword(
+  const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
     password
   );
 
-  if (userCredentials && auth.currentUser) {
+  if (userCredential && auth.currentUser) {
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     });
   }
 
-  return userCredentials;
+  return userCredential;
 };
 
 export const signIn = async ({ email, password }: ISignInDto) => {
