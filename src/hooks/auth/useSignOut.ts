@@ -7,8 +7,9 @@ export const useSignOut = () => {
   const { mutate: signOutMutation } = useMutation({
     mutationFn: () => logOut(),
 
-    onSuccess: () => {
-      queryCLient.invalidateQueries({ queryKey: ['user'] });
+    onSuccess: async () => {
+      await queryCLient.invalidateQueries({ queryKey: ['user'] });
+      // queryCLient.clear();
     },
 
     onError: error => {

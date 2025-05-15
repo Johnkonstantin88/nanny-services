@@ -7,6 +7,7 @@ export interface UserMenuProps {}
 
 const UserMenu: FC<UserMenuProps> = () => {
   const { data } = useUserState();
+  console.log(data);
   const signOut = useSignOut();
 
   return (

@@ -4,7 +4,7 @@ import {
   updateProfile,
   signOut,
 } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { auth } from '../firestoreConfig';
 import { ISignInDto, ISignUpDto } from '../../types/auth.types';
 
 export const signUp = async ({ displayName, email, password }: ISignUpDto) => {

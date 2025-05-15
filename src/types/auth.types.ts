@@ -1,5 +1,3 @@
-import { User } from 'firebase/auth';
-
 export interface ISignUpDto {
   displayName: string;
   email: string;
@@ -8,24 +6,13 @@ export interface ISignUpDto {
 
 export interface ISignInDto extends Omit<ISignUpDto, 'displayName'> {}
 
-export interface IResponseData {
-  data: IUser;
-}
-
 export interface IUser {
-  kind: string;
-  idToken: string;
-  displayName: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
+  displayName: string | null;
+  email: string | null;
+  uid: string;
 }
 
 export interface IUserState {
-  user: User;
+  user: IUser;
   isLoggedIn: boolean;
-  // signIn: (creds: ISignInDto) => void;
-  // signUp: (creds: ISignUpDto) => void;
-  // signOut: () => void;
 }

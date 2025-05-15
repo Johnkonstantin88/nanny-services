@@ -8,6 +8,7 @@ export interface NavigationProps {}
 const Navigation: FC<NavigationProps> = () => {
   const location = useLocation();
   const { data: user } = useUserState();
+
   return (
     <nav
       className={clsx(

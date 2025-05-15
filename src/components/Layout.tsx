@@ -4,13 +4,16 @@ import clsx from 'clsx';
 import HomePageHeader from './HomePageHeader';
 import Header from './Header';
 import { usePrefetchQuery } from '@tanstack/react-query';
-import { getNannies } from '../firebase/services/nannies';
+import { useGetNanniesData } from '../hooks';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
+  const getNannies = useGetNanniesData();
   const location = useLocation();
+
   usePrefetchQuery({
     queryKey: ['nannies'],
     queryFn: getNannies,
+    staleTime: 60 * 60 * 1000,
   });
 
   return (

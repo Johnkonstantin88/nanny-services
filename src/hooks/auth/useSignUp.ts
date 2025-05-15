@@ -4,6 +4,7 @@ import { signUp } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
 import { ISignUpDto } from '../../types/auth.types';
 import toast from 'react-hot-toast';
+import { setFirebaseUserDoc } from '../../firebase/services/docs';
 
 export const useSignUp = () => {
   const { setData } = useUserState();
@@ -16,8 +17,15 @@ export const useSignUp = () => {
   >({
     mutationFn: data => signUp(data),
 
-    onSuccess: creds => {
-      setData({ ...creds, isLoggedIn: true });
+    onSuccess: async creds => {
+      const { user: currentUser } = creds;
+      const user = {
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid,
+      };
+      setData({ user: { ...user }, isLoggedIn: true });
+      await setFirebaseUserDoc(user);
       toast('User registration was successful!');
     },
 

@@ -17,8 +17,13 @@ export const useSignIn = () => {
     mutationFn: data => signIn(data),
 
     onSuccess: creds => {
-      const { user } = creds;
-      setData({ ...creds, isLoggedIn: true });
+      const { user: currentUser } = creds;
+      const user = {
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid,
+      };
+      setData({ user: { ...user }, isLoggedIn: true });
       toast(`Welcome, ${user.displayName}!`);
     },
 

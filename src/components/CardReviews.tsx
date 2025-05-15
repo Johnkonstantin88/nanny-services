@@ -1,12 +1,12 @@
 import { FC, useRef } from 'react';
 import CardReviewsItem from './CardReviewsItem';
 import Button from './Button';
-import useToggleVisibility from '../hooks/useToggleVisible';
-import { Review } from '../types/firebase.types';
+import { useToggleVisibility } from '../hooks';
+import { IReview } from '../types/data.types';
 import clsx from 'clsx';
 
 export interface CardReviewsProps {
-  reviews: Review[];
+  reviews: IReview[];
 }
 
 export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
@@ -46,7 +46,7 @@ export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
 
         <Button
           type="button"
-          className="max-w-[215px] px-7 py-3.5 text-[16px] text-white-main font-medium -tracking-1 leading-6
+          className="max-w-[215px] px-7 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
      bg-green-main rounded-[30px] mr-3"
         >
           Make an appointment

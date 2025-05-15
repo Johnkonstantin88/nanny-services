@@ -18,7 +18,7 @@ const schema = yup
   })
   .required();
 
-const RegisterForm: FC<RegisterFormProps> = ({ onCloseRegisterModal }) => {
+const RegisterForm: FC<RegisterFormProps> = () => {
   const [isHidePassword, setIsHidePassword] = useState(true);
 
   const {
@@ -34,7 +34,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onCloseRegisterModal }) => {
 
   const onSubmit: SubmitHandler<ISignUpDto> = data => {
     signUp(data);
-    onCloseRegisterModal();
+    // onCloseRegisterModal();
   };
 
   const togglePasswordHandler = () => {

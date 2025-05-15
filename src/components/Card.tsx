@@ -1,24 +1,25 @@
 import { FC } from 'react';
-import { FirebaseResponse } from '../types/firebase.types';
 import Icon from './Icon';
 import calculateAge from '../utils/calculateAge';
 import replaceCharacters from '../utils/replaceCharacters';
 import { CardReviews } from './CardReviews';
+import { IDocument } from '../types/data.types';
 
-const Card: FC<FirebaseResponse> = ({
-  about,
-  avatar_url,
-  birthday,
-  characters,
-  education,
-  experience,
-  kids_age,
-  location,
-  name,
-  price_per_hour,
-  rating,
-  reviews,
-}) => {
+const Card: FC<IDocument> = ({ documentDetails }) => {
+  const {
+    about,
+    avatar_url,
+    birthday,
+    characters,
+    education,
+    experience,
+    kids_age,
+    location,
+    name,
+    price_per_hour,
+    rating,
+    reviews,
+  } = documentDetails;
   return (
     <div className="relative flex gap-6 p-6 bg-white-main rounded-3xl">
       <div className="relative center-position w-30 h-30 p-3 border-2 border-red-border rounded-[30px]">
