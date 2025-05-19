@@ -16,7 +16,7 @@ const HomePage: FC<HomePageProps> = () => {
   };
 
   return (
-    <main className="font-roboto">
+    <>
       <title>Home</title>
       <section className="home-section-container">
         <div className="absolute left-24 bottom-[163px] w-[517px] h-[322px] text-white-main">
@@ -29,8 +29,8 @@ const HomePage: FC<HomePageProps> = () => {
           <NavLink
             to={'/nannies'}
             className="flex max-w-[237px] gap-4.5 justify-center items-baseline 
-          px-12.5 py-4.5 text-xl font-medium leading-5 -tracking-1 
-          border-button primary-transition  hover:border-(--color-white-main)"
+         px-12.5 py-4.5 text-xl font-medium leading-5 -tracking-1 
+         border-button primary-transition  hover:border-(--color-white-main)"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -56,7 +56,7 @@ const HomePage: FC<HomePageProps> = () => {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 };
 export default HomePage;

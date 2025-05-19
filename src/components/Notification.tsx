@@ -10,7 +10,7 @@ const toastStyles = {
 };
 
 const Notification: FC = () => {
-  return <Toaster toastOptions={{ style: toastStyles }} />;
+  return <Toaster position="top-right" toastOptions={{ style: toastStyles }} />;
 };
 
 export default Notification;

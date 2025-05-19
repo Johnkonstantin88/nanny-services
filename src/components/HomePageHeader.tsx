@@ -10,7 +10,7 @@ const HomePageHeader: FC<HomePageHeaderProps> = () => {
   const { data: user } = useUserState();
 
   return (
-    <header className="home-header-container">
+    <header className="home-header-container font-roboto">
       <p className="text-2xl font-medium leading-4 -tracking-2">
         Nanny.Services
       </p>

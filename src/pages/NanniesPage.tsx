@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import {
   useQuery,
   useQueryClient,
@@ -7,8 +7,9 @@ import {
 import CardList from '../components/CardList';
 import Button from '../components/Button';
 import { useGetNanniesData } from '../hooks';
-import { IDocument } from '../types/data.types';
 import { getCountCollectionDocs } from '../firebase/services/docs';
+import { IDocument } from '../types/data.types';
+import { FIREBASE_COLLECTION, QUERY_KEY } from '../constants';
 
 export interface NanniesPageProps {}
 
@@ -17,7 +18,7 @@ const NanniesPage: FC<NanniesPageProps> = () => {
   const getNannies = useGetNanniesData();
 
   const { data: nanniesData } = useSuspenseQuery({
-    queryKey: ['nannies'],
+    queryKey: [QUERY_KEY.nannies],
     queryFn: getNannies,
     structuralSharing: false,
     staleTime: 60 * 60 * 1000,
@@ -27,24 +28,25 @@ const NanniesPage: FC<NanniesPageProps> = () => {
 
   const getNext = async () => {
     const docs = await queryClient.fetchQuery({
-      queryKey: ['nannies'],
+      queryKey: [QUERY_KEY.nannies],
       queryFn: getNannies,
     });
     console.log(nanniesData);
 
     queryClient.setQueryData(
-      ['nannies'],
+      [QUERY_KEY.nannies],
       [...(nanniesData as IDocument[]), ...docs]
     );
   };
 
   const { data: totalDocs } = useQuery({
-    queryKey: ['total-docs-nannies'],
-    queryFn: getCountCollectionDocs,
+    queryKey: [QUERY_KEY.totalDocs],
+    queryFn: () => getCountCollectionDocs(FIREBASE_COLLECTION.nannies),
+    staleTime: 60 * 60 * 1000,
   });
 
   return (
-    <main className="pt-16 pb-25 bg-(--color-white-bg)">
+    <>
       <title>Nannies</title>
       <section className="section-container ">
         <CardList nanniesData={nanniesData} />
@@ -52,14 +54,14 @@ const NanniesPage: FC<NanniesPageProps> = () => {
           <Button
             type="button"
             className="block max-w-[159px] px-10 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
-     bg-green-main rounded-[30px] mx-auto mt-16"
+    bg-green-main rounded-[30px] mx-auto mt-16"
             onClick={() => getNext()}
           >
             Load more
           </Button>
         )}
       </section>
-    </main>
+    </>
   );
 };
 

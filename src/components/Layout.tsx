@@ -5,13 +5,14 @@ import HomePageHeader from './HomePageHeader';
 import Header from './Header';
 import { usePrefetchQuery } from '@tanstack/react-query';
 import { useGetNanniesData } from '../hooks';
+import { QUERY_KEY } from '../constants';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const getNannies = useGetNanniesData();
   const location = useLocation();
 
   usePrefetchQuery({
-    queryKey: ['nannies'],
+    queryKey: [QUERY_KEY.nannies],
     queryFn: getNannies,
     staleTime: 60 * 60 * 1000,
   });
@@ -19,7 +20,14 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={clsx(location.pathname === '/' && 'home-page-container ')}>
       {location.pathname === '/' ? <HomePageHeader /> : <Header />}
-      <Suspense fallback={null}>{children}</Suspense>
+      <main
+        className={clsx(
+          'font-roboto',
+          location.pathname !== '/' && 'pt-16 pb-25 font-helvetica-neue'
+        )}
+      >
+        <Suspense fallback={null}>{children}</Suspense>
+      </main>
     </div>
   );
 };

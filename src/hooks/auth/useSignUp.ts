@@ -2,9 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useUserState } from '../../state/user';
 import { signUp } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
-import { ISignUpDto } from '../../types/auth.types';
+import { ISignUpDto, IUser } from '../../types/auth.types';
 import toast from 'react-hot-toast';
-import { setFirebaseUserDoc } from '../../firebase/services/docs';
+import { getDocument, setFirebaseUserDoc } from '../../firebase/services/docs';
+import { auth } from '../../firebase/firestoreConfig';
+import { FIREBASE_COLLECTION } from '../../constants';
 
 export const useSignUp = () => {
   const { setData } = useUserState();
@@ -24,9 +26,18 @@ export const useSignUp = () => {
         email: currentUser.email,
         uid: currentUser.uid,
       };
-      setData({ user: { ...user }, isLoggedIn: true });
+
       await setFirebaseUserDoc(user);
-      toast('User registration was successful!');
+
+      const userId = auth.currentUser?.uid;
+      const userData: IUser | undefined = await getDocument(
+        FIREBASE_COLLECTION.users,
+        userId as string
+      );
+      if (userData) {
+        setData({ user: { ...userData }, isLoggedIn: true });
+        toast('User registration was successful!');
+      }
     },
 
     onError: error => {

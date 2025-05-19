@@ -10,8 +10,8 @@ const Header: FC<HeaderProps> = () => {
   const { data: user } = useUserState();
 
   return (
-    <header className="relative bg-green-main">
-      <div className="header-container">
+    <header className="relative bg-green-main ">
+      <div className="header-container font-roboto">
         <p className="text-2xl font-medium leading-4 -tracking-2">
           Nanny.Services
         </p>

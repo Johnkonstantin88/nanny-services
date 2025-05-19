@@ -32,10 +32,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
 
   const signUp = useSignUp();
 
-  const onSubmit: SubmitHandler<ISignUpDto> = data => {
-    signUp(data);
-    // onCloseRegisterModal();
-  };
+  const onSubmit: SubmitHandler<ISignUpDto> = data => signUp(data);
 
   const togglePasswordHandler = () => {
     setIsHidePassword(!isHidePassword);

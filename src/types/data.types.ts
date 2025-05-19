@@ -1,8 +1,9 @@
 import { Timestamp } from 'firebase/firestore';
 
 export interface IDocument {
-  documentDetails: ICard;
   createdAt: Timestamp;
+  documentDetails: ICard;
+  id: string;
 }
 
 export interface IFirebaseResponse {

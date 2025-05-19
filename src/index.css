@@ -41,7 +41,7 @@
 body {
   font-family: var(--font-helvetica-neue);
   color: var(--color-black-main);
-  background-color: var(--color-white-main);
+  background-color: var(--color-white-bg);
 }
 
 @layer base {

@@ -4,8 +4,15 @@ import calculateAge from '../utils/calculateAge';
 import replaceCharacters from '../utils/replaceCharacters';
 import { CardReviews } from './CardReviews';
 import { IDocument } from '../types/data.types';
+import { useQuery } from '@tanstack/react-query';
+import { FIREBASE_COLLECTION, QUERY_KEY } from '../constants';
+import { getDocument, toggleFavorite } from '../firebase/services/docs';
+import useThrottle from '../hooks/useThrottle';
+import { useFavoritesState } from '../state/favorites';
+import { useUserState } from '../state/user';
+import toast from 'react-hot-toast';
 
-const Card: FC<IDocument> = ({ documentDetails }) => {
+const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
   const {
     about,
     avatar_url,
@@ -20,6 +27,45 @@ const Card: FC<IDocument> = ({ documentDetails }) => {
     rating,
     reviews,
   } = documentDetails;
+
+  const { setData, resetData } = useFavoritesState();
+
+  const { data: userData } = useUserState();
+  const userId = userData?.user.uid;
+  const isLoggedIn = userData?.isLoggedIn;
+
+  const { data: favorites } = useQuery({
+    queryKey: [QUERY_KEY.favorites],
+    queryFn: async () => {
+      const user = await getDocument(
+        FIREBASE_COLLECTION.users,
+        userId as string
+      );
+
+      return user?.favorites;
+    },
+  });
+
+  const isFavorite = favorites?.includes(cardId);
+
+  const toggleFavoritesHandler = async () => {
+    if (!isLoggedIn) {
+      toast('Only registered users can select this option.', {
+        duration: 2000,
+        position: 'bottom-right',
+      });
+      return;
+    }
+    await toggleFavorite(isFavorite, userId as string, cardId);
+    if (favorites) setData(favorites);
+    resetData();
+  };
+
+  const throttledFavorite = useThrottle(
+    toggleFavoritesHandler,
+    isLoggedIn ? 300 : 2000
+  );
+
   return (
     <div className="relative flex gap-6 p-6 bg-white-main rounded-3xl">
       <div className="relative center-position w-30 h-30 p-3 border-2 border-red-border rounded-[30px]">
@@ -66,8 +112,16 @@ const Card: FC<IDocument> = ({ documentDetails }) => {
                   <span className="text-green-light">{price_per_hour}$</span>
                 </p>
               </div>
-              <button type="button">
-                <Icon name={'icon-heart-converted'} width={26} height={26} />
+              <button type="button" onClick={() => throttledFavorite()}>
+                <Icon
+                  name={
+                    isFavorite
+                      ? 'icon-heart-filled-converted'
+                      : 'icon-heart-converted'
+                  }
+                  width={26}
+                  height={26}
+                />
               </button>
             </div>
           </div>

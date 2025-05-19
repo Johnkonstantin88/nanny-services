@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logOut } from '../../firebase/services/auth';
+import { QUERY_KEY } from '../../constants';
 
 export const useSignOut = () => {
-  const queryCLient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate: signOutMutation } = useMutation({
     mutationFn: () => logOut(),
 
     onSuccess: async () => {
-      await queryCLient.invalidateQueries({ queryKey: ['user'] });
-      // queryCLient.clear();
+      await queryClient.invalidateQueries({ queryKey: [QUERY_KEY.user] });
+      queryClient.removeQueries({ queryKey: [QUERY_KEY.favorites] });
     },
 
     onError: error => {

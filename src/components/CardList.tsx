@@ -3,7 +3,7 @@ import Card from './Card';
 import { IDocument } from '../types/data.types';
 
 export interface CardListProps {
-  nanniesData: IDocument[] | undefined;
+  nanniesData?: IDocument[] | undefined;
 }
 
 const CardList: FC<CardListProps> = ({ nanniesData }) => {

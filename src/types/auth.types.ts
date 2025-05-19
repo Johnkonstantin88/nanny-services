@@ -9,6 +9,7 @@ export interface ISignInDto extends Omit<ISignUpDto, 'displayName'> {}
 export interface IUser {
   displayName: string | null;
   email: string | null;
+  favorites?: string[];
   uid: string;
 }
 
