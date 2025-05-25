@@ -10,7 +10,7 @@ export const useSignOut = () => {
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [QUERY_KEY.user] });
-      queryClient.removeQueries({ queryKey: [QUERY_KEY.favorites] });
+      queryClient.removeQueries({ queryKey: [QUERY_KEY.favoritesId] });
     },
 
     onError: error => {

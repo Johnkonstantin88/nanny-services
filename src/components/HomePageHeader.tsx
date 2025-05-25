@@ -3,13 +3,17 @@ import Navigation from './Navigation';
 import AuthNav from './AuthNav';
 import UserMenu from './UserMenu';
 import { useUserState } from '../state/user';
+import { useIsRestoring } from '@tanstack/react-query';
 
 export interface HomePageHeaderProps {}
 
 const HomePageHeader: FC<HomePageHeaderProps> = () => {
   const { data: user } = useUserState();
+  const isRestoring = useIsRestoring();
 
-  return (
+  return isRestoring ? (
+    <p>Refreshing...</p>
+  ) : (
     <header className="home-header-container font-roboto">
       <p className="text-2xl font-medium leading-4 -tracking-2">
         Nanny.Services

@@ -3,13 +3,17 @@ import { useUserState } from '../state/user';
 import Navigation from './Navigation';
 import AuthNav from './AuthNav';
 import UserMenu from './UserMenu';
+import { useIsRestoring } from '@tanstack/react-query';
 
 export interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const { data: user } = useUserState();
+  const isRestoring = useIsRestoring();
 
-  return (
+  return isRestoring ? (
+    <p>Refreshing...</p>
+  ) : (
     <header className="relative bg-green-main ">
       <div className="header-container font-roboto">
         <p className="text-2xl font-medium leading-4 -tracking-2">

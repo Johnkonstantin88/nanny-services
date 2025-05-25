@@ -28,17 +28,7 @@ export const useSignIn = () => {
 
       if (userData) {
         setData({ user: { ...userData }, isLoggedIn: true });
-        queryClient.fetchQuery({
-          queryKey: [QUERY_KEY.favorites],
-          queryFn: async () => {
-            const user = await getDocument(
-              FIREBASE_COLLECTION.users,
-              userId as string
-            );
-
-            return user?.favorites;
-          },
-        });
+        queryClient.setQueryData([QUERY_KEY.favoritesId], userData.favorites);
         toast(`Welcome, ${userData?.displayName}!`);
       }
     },

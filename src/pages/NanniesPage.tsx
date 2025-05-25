@@ -16,22 +16,17 @@ export interface NanniesPageProps {}
 const NanniesPage: FC<NanniesPageProps> = () => {
   const queryClient = useQueryClient();
   const getNannies = useGetNanniesData();
-
   const { data: nanniesData } = useSuspenseQuery({
     queryKey: [QUERY_KEY.nannies],
     queryFn: getNannies,
-    structuralSharing: false,
     staleTime: 60 * 60 * 1000,
   });
-
-  console.log(nanniesData);
 
   const getNext = async () => {
     const docs = await queryClient.fetchQuery({
       queryKey: [QUERY_KEY.nannies],
       queryFn: getNannies,
     });
-    console.log(nanniesData);
 
     queryClient.setQueryData(
       [QUERY_KEY.nannies],
@@ -40,7 +35,7 @@ const NanniesPage: FC<NanniesPageProps> = () => {
   };
 
   const { data: totalDocs } = useQuery({
-    queryKey: [QUERY_KEY.totalDocs],
+    queryKey: [QUERY_KEY.totalNanniesDocs],
     queryFn: () => getCountCollectionDocs(FIREBASE_COLLECTION.nannies),
     staleTime: 60 * 60 * 1000,
   });

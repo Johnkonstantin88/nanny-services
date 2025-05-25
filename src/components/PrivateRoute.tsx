@@ -1,6 +1,7 @@
 import { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUserState } from '../state/user';
+import { useIsRestoring } from '@tanstack/react-query';
 
 export interface PrivateRouteProps {
   component: JSX.Element;
@@ -12,8 +13,8 @@ export const PrivateRoute = ({
   redirectTo = '/',
 }: PrivateRouteProps) => {
   const { data: user } = useUserState();
-  //   const { isLoggedIn, isRefreshing } = useAuth();
-  //   const shouldRedirect = !isLoggedIn && !isRefreshing;
+  const isRestoring = useIsRestoring();
+  const shouldRedirect = !user && !isRestoring;
 
-  return !user ? <Navigate to={redirectTo} /> : Component;
+  return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
 };

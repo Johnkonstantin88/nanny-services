@@ -2,14 +2,14 @@ import { FC } from 'react';
 import Card from './Card';
 import { IDocument } from '../types/data.types';
 
-export interface CardListProps {
-  nanniesData: IDocument[] | undefined;
+export interface FavoritesListProps {
+  favoritesData: IDocument[] | undefined;
 }
 
-const CardList: FC<CardListProps> = ({ nanniesData }) => {
+const FavoritesList: FC<FavoritesListProps> = ({ favoritesData }) => {
   return (
     <ul className="flex flex-col gap-8">
-      {nanniesData?.map(el => (
+      {favoritesData?.map(el => (
         <li key={el.id}>
           <Card {...el} />
         </li>
@@ -18,4 +18,4 @@ const CardList: FC<CardListProps> = ({ nanniesData }) => {
   );
 };
 
-export default CardList;
+export default FavoritesList;

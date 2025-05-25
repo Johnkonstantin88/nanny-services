@@ -2,7 +2,8 @@ export const QUERY_KEY = {
   nannies: 'nannies',
   user: 'user',
   lastVisibleDoc: 'last-visible-doc',
-  totalDocs: 'total-docs-nannies',
+  totalNanniesDocs: 'total-nannies-docs',
+  favoritesId: 'favorites-id',
   favorites: 'favorites',
 };
 

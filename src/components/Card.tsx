@@ -1,16 +1,16 @@
 import { FC } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useUserState } from '../state/user';
+import { useThrottle } from '../hooks';
 import Icon from './Icon';
+import { CardReviews } from './CardReviews';
+import toast from 'react-hot-toast';
+import { toggleFavorite } from '../firebase/services/docs';
 import calculateAge from '../utils/calculateAge';
 import replaceCharacters from '../utils/replaceCharacters';
-import { CardReviews } from './CardReviews';
 import { IDocument } from '../types/data.types';
-import { useQuery } from '@tanstack/react-query';
-import { FIREBASE_COLLECTION, QUERY_KEY } from '../constants';
-import { getDocument, toggleFavorite } from '../firebase/services/docs';
-import useThrottle from '../hooks/useThrottle';
-import { useFavoritesState } from '../state/favorites';
-import { useUserState } from '../state/user';
-import toast from 'react-hot-toast';
+import { favoritesIdOptions } from '../queryClient/queryOptions';
+import { QUERY_KEY } from '../constants';
 
 const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
   const {
@@ -28,27 +28,14 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
     reviews,
   } = documentDetails;
 
-  const { setData, resetData } = useFavoritesState();
-
+  const queryClient = useQueryClient();
   const { data: userData } = useUserState();
   const userId = userData?.user.uid;
   const isLoggedIn = userData?.isLoggedIn;
+  const { data: favoritesId } = useQuery(favoritesIdOptions(userId));
+  const isFavorite = favoritesId?.includes(cardId) as boolean;
 
-  const { data: favorites } = useQuery({
-    queryKey: [QUERY_KEY.favorites],
-    queryFn: async () => {
-      const user = await getDocument(
-        FIREBASE_COLLECTION.users,
-        userId as string
-      );
-
-      return user?.favorites;
-    },
-  });
-
-  const isFavorite = favorites?.includes(cardId);
-
-  const toggleFavoritesHandler = async () => {
+  const toggleFavoriteHandler = async () => {
     if (!isLoggedIn) {
       toast('Only registered users can select this option.', {
         duration: 2000,
@@ -57,12 +44,14 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
       return;
     }
     await toggleFavorite(isFavorite, userId as string, cardId);
-    if (favorites) setData(favorites);
-    resetData();
+    queryClient.setQueryData([QUERY_KEY.favoritesId], favoritesId);
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_KEY.favoritesId],
+    });
   };
 
   const throttledFavorite = useThrottle(
-    toggleFavoritesHandler,
+    toggleFavoriteHandler,
     isLoggedIn ? 300 : 2000
   );
 

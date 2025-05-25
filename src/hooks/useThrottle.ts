@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 
-const useThrottle = (callback: Function, limit: number) => {
+export const useThrottle = (callback: Function, limit: number) => {
   const lastCallRef = useRef<number>(0);
   const throttledCallback = useCallback(
     (...args: unknown[]) => {
@@ -14,4 +14,3 @@ const useThrottle = (callback: Function, limit: number) => {
   );
   return throttledCallback;
 };
-export default useThrottle;

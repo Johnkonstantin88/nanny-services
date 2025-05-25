@@ -1,6 +1,7 @@
-import { createGlobalState } from '.';
-import { QUERY_KEY } from '../constants';
+// import { createGlobalState } from '.';
+// import { QUERY_KEY } from '../constants';
+// import { IDocument } from '../types/data.types';
 
-export const useFavoritesState = createGlobalState<string[]>(
-  QUERY_KEY.favorites
-);
+// export const useFavoritesState = createGlobalState<IDocument[]>(
+//   QUERY_KEY.favorites
+// );
