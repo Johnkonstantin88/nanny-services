@@ -47,7 +47,7 @@ export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
         <Button
           type="button"
           className="max-w-[215px] px-7 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
-     bg-green-main rounded-[30px] mr-3"
+     bg-green-main rounded-[30px]"
         >
           Make an appointment
         </Button>

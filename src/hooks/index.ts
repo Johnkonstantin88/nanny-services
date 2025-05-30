@@ -4,3 +4,4 @@ export * from './auth/useSignOut';
 export * from './useToggleVisibility';
 export * from './useGetNanniesData';
 export * from './useThrottle';
+export * from './useFavoritesPagination';

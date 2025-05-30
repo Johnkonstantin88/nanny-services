@@ -1,7 +1,8 @@
 import { queryOptions } from '@tanstack/react-query';
 import { FIREBASE_COLLECTION, QUERY_KEY } from '../constants';
-import { getDocument } from '../firebase/services/docs';
+import { getDocument, getFavoritesDocs } from '../firebase/services/docs';
 import { IUser } from '../types/auth.types';
+import { IDocument } from '../types/data.types';
 
 export const favoritesIdOptions = (userId: string | undefined) =>
   queryOptions({
@@ -14,4 +15,16 @@ export const favoritesIdOptions = (userId: string | undefined) =>
 
       if (user) return user.favorites;
     },
+  });
+
+export const favoritesOptions = (favoritesId: string[] | undefined) =>
+  queryOptions({
+    queryKey: [QUERY_KEY.favorites],
+    queryFn: async () => {
+      if (favoritesId) {
+        const result = (await getFavoritesDocs(favoritesId)) as IDocument[];
+        return result;
+      }
+    },
+    staleTime: 60 * 60 * 1000,
   });

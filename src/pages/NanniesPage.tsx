@@ -10,6 +10,7 @@ import { useGetNanniesData } from '../hooks';
 import { getCountCollectionDocs } from '../firebase/services/docs';
 import { IDocument } from '../types/data.types';
 import { FIREBASE_COLLECTION, QUERY_KEY } from '../constants';
+import CustomSelect from '../components/CustomSelect';
 
 export interface NanniesPageProps {}
 
@@ -22,7 +23,7 @@ const NanniesPage: FC<NanniesPageProps> = () => {
     staleTime: 60 * 60 * 1000,
   });
 
-  const getNext = async () => {
+  const getNextNannies = async () => {
     const docs = await queryClient.fetchQuery({
       queryKey: [QUERY_KEY.nannies],
       queryFn: getNannies,
@@ -44,13 +45,14 @@ const NanniesPage: FC<NanniesPageProps> = () => {
     <>
       <title>Nannies</title>
       <section className="section-container ">
+        <CustomSelect />
         <CardList nanniesData={nanniesData} />
         {totalDocs && totalDocs > nanniesData.length && (
           <Button
             type="button"
             className="block max-w-[159px] px-10 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
     bg-green-main rounded-[30px] mx-auto mt-16"
-            onClick={() => getNext()}
+            onClick={() => getNextNannies()}
           >
             Load more
           </Button>
