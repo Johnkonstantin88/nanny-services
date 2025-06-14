@@ -8,7 +8,7 @@ import {
 import FavoritesList from '../components/FavoritesList';
 import { QUERY_KEY } from '../constants';
 import { IDocument } from '../types/data.types';
-import CustomSelect from '../components/CustomSelect';
+import NanniesFilters from '../components/NanniesFilters';
 
 export interface FavoritesPageProps {}
 
@@ -29,7 +29,7 @@ const FavoritesPage: FC<FavoritesPageProps> = () => {
     <>
       <title>Favorites</title>
       <section className="section-container ">
-        <CustomSelect />
+        {/* <NanniesFilters /> */}
         <FavoritesList favoritesData={favoritesData as IDocument[]} />
       </section>
     </>

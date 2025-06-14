@@ -1,3 +1,5 @@
+import { OrderByDirection } from 'firebase/firestore';
+
 export interface FirebaseConfig {
   apiKey: string;
   authDomain: string;
@@ -5,4 +7,8 @@ export interface FirebaseConfig {
   storageBucket: string;
   messagingSenderId: string;
   appId: string;
+}
+
+export interface IFirebaseQueryOptions {
+  orderDirection: OrderByDirection;
 }

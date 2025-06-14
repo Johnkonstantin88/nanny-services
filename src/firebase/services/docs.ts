@@ -5,12 +5,17 @@ import {
   doc,
   getCountFromServer,
   getDoc,
+  query,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../firestoreConfig';
 import { IUser } from '../../types/auth.types';
-import { FIREBASE_COLLECTION } from '../../constants';
+import {
+  COUNT_DOCS_FILTERS,
+  FIREBASE_COLLECTION,
+  SELECT_VALUES,
+} from '../../constants';
 import { IDocument } from '../../types/data.types';
 
 export const setFirebaseUserDoc = (creds: IUser) =>
@@ -19,9 +24,27 @@ export const setFirebaseUserDoc = (creds: IUser) =>
     favorites: [],
   });
 
-export const getCountCollectionDocs = async (collName: string) => {
+export const getCountCollectionDocs = async (
+  collName: string,
+  filters?: string
+) => {
   const coll = collection(db, collName);
-  const snapshot = await getCountFromServer(coll);
+  let q = query(coll);
+
+  if (filters === SELECT_VALUES.greaterThan) {
+    q = query(coll, COUNT_DOCS_FILTERS.greaterThan);
+  }
+  if (filters === SELECT_VALUES.lessThan) {
+    q = query(coll, COUNT_DOCS_FILTERS.lessThan);
+  }
+  if (filters === SELECT_VALUES.popular) {
+    q = query(coll, COUNT_DOCS_FILTERS.popular);
+  }
+  if (filters === SELECT_VALUES.notPopular) {
+    q = query(coll, COUNT_DOCS_FILTERS.notPopular);
+  }
+
+  const snapshot = await getCountFromServer(q);
   return snapshot.data().count;
 };
 

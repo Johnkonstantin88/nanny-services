@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { Review } from '../types/firebase.types';
+import { IReview } from '../types/data.types';
 import Icon from './Icon';
 
-const CardReviewsItem: FC<Review> = ({ comment, rating, reviewer }) => {
+const CardReviewsItem: FC<IReview> = ({ comment, rating, reviewer }) => {
   return (
     <>
       <div className="flex gap-3">

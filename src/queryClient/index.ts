@@ -20,10 +20,10 @@ const shouldDehydrateQuery = (query: Query): boolean => {
   if (query.queryKey.length === 0) return false;
   if (query.state.status !== 'success') return false;
 
-  const keysToDehydrate: string[] = ['nannies'];
+  const keysToDehydrate: string[] = ['user'];
 
   const stringKey = String(query.queryKey[0]);
-  return !keysToDehydrate.includes(stringKey);
+  return keysToDehydrate.includes(stringKey);
 };
 
 export const dehydrateOptions: DehydrateOptions = {
