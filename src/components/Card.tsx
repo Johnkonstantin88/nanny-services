@@ -37,7 +37,7 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
 
   const toggleFavoriteHandler = async () => {
     if (!isLoggedIn) {
-      toast('Only registered users can select this option.', {
+      toast.error('Only registered users can select this option.', {
         duration: 2000,
         position: 'bottom-right',
       });
@@ -56,7 +56,7 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
   );
 
   return (
-    <div className="relative flex gap-6 p-6 bg-white-main rounded-3xl">
+    <div className="flex gap-6 p-6 bg-white-main rounded-3xl">
       <div className="relative center-position w-30 h-30 p-3 border-2 border-red-border rounded-[30px]">
         <img
           src={avatar_url}
@@ -101,7 +101,7 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
                   <span className="text-green-light">{price_per_hour}$</span>
                 </p>
               </div>
-              <button type="button" onClick={() => throttledFavorite()}>
+              <button type="button" onClick={throttledFavorite}>
                 <Icon
                   name={
                     isFavorite

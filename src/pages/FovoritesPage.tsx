@@ -8,7 +8,8 @@ import {
 import FavoritesList from '../components/FavoritesList';
 import { QUERY_KEY } from '../constants';
 import { IDocument } from '../types/data.types';
-import NanniesFilters from '../components/NanniesFilters';
+import Loader from '../components/Loader';
+// import NanniesFilters from '../components/NanniesFilters';
 
 export interface FavoritesPageProps {}
 
@@ -16,7 +17,9 @@ const FavoritesPage: FC<FavoritesPageProps> = () => {
   const queryClient = useQueryClient();
   const { data: userData } = useUserState();
   const userId = userData?.user.uid;
-  const { data: favoritesId } = useQuery(favoritesIdOptions(userId));
+  const { data: favoritesId, isFetching } = useQuery(
+    favoritesIdOptions(userId)
+  );
   const { data: favoritesData } = useQuery(favoritesOptions(favoritesId));
 
   useEffect(() => {
@@ -30,7 +33,14 @@ const FavoritesPage: FC<FavoritesPageProps> = () => {
       <title>Favorites</title>
       <section className="section-container ">
         {/* <NanniesFilters /> */}
-        <FavoritesList favoritesData={favoritesData as IDocument[]} />
+        {isFetching && <Loader />}
+        {favoritesData && favoritesData?.length > 0 ? (
+          <FavoritesList favoritesData={favoritesData as IDocument[]} />
+        ) : (
+          <h2 className="text-center text-2xl text-grey-text-main font-medium leading-3 font-roboto">
+            There is no favorites yet.
+          </h2>
+        )}
       </section>
     </>
   );

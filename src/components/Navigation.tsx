@@ -2,12 +2,34 @@ import { FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useUserState } from '../state/user';
 import clsx from 'clsx';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  favoritesIdOptions,
+  favoritesOptions,
+} from '../queryClient/queryOptions';
+import { QUERY_KEY } from '../constants';
+import { useThrottle } from '../hooks';
 
 export interface NavigationProps {}
 
 const Navigation: FC<NavigationProps> = () => {
   const location = useLocation();
-  const { data: user } = useUserState();
+  const queryClient = useQueryClient();
+  const { data: userData } = useUserState();
+  const userId = userData?.user.uid;
+  const isLoggedIn = userData?.isLoggedIn;
+  const { data: favoritesId } = useQuery(favoritesIdOptions(userId));
+
+  const prefetchFavorites = async () => {
+    if (isLoggedIn && location.pathname === '/nannies') {
+      await queryClient.prefetchQuery(favoritesOptions(favoritesId));
+      await queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.favorites],
+      });
+    }
+  };
+
+  const throttledPrefetch = useThrottle(prefetchFavorites, 2000);
 
   return (
     <nav
@@ -28,7 +50,7 @@ const Navigation: FC<NavigationProps> = () => {
       >
         Nannies
       </NavLink>
-      {location.pathname !== '/' && user?.isLoggedIn && (
+      {location.pathname !== '/' && userData?.isLoggedIn && (
         <NavLink
           to="/favorites"
           className={({ isActive }) =>
@@ -37,6 +59,8 @@ const Navigation: FC<NavigationProps> = () => {
               isActive && 'after:current'
             )
           }
+          onMouseEnter={throttledPrefetch}
+          onFocus={throttledPrefetch}
         >
           Favorites
         </NavLink>

@@ -5,11 +5,23 @@ export interface ButtonProps {
   children: React.ReactNode;
   type: 'button' | 'submit' | 'reset';
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ className, type, onClick, children }) => {
+const Button: FC<ButtonProps> = ({
+  className,
+  type,
+  onClick,
+  disabled,
+  children,
+}) => {
   return (
-    <button className={className} type={type} onClick={onClick}>
+    <button
+      className={className}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

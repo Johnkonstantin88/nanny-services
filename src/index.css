@@ -46,6 +46,7 @@ body {
   color: var(--color-black-main);
   background-color: var(--color-white-bg);
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 @layer base {

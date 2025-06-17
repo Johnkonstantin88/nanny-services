@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import CardReviewsItem from './CardReviewsItem';
 import Button from './Button';
 import { useToggleVisibility } from '../hooks';
@@ -12,6 +12,14 @@ export interface CardReviewsProps {
 export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
   const [isVisible, toggleVisibility] = useToggleVisibility();
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    isVisible &&
+      contentRef.current?.scrollIntoView({
+        block: 'center',
+        behavior: 'smooth',
+      });
+  }, [isVisible]);
 
   return (
     <>

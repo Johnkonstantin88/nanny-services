@@ -25,9 +25,6 @@ export const createGlobalState = <T>(
       queryClient.invalidateQueries({
         queryKey: [queryKey],
       });
-      // queryClient.refetchQueries({
-      //   queryKey: [queryKey],
-      // });
     };
 
     return { data, setData, resetData };

@@ -15,6 +15,7 @@ export const favoritesIdOptions = (userId: string | undefined) =>
 
       if (user) return user.favorites;
     },
+    staleTime: 60 * 60 * 1000,
   });
 
 export const favoritesOptions = (favoritesId: string[] | undefined) =>
@@ -26,5 +27,5 @@ export const favoritesOptions = (favoritesId: string[] | undefined) =>
         return result;
       }
     },
-    staleTime: 60 * 60 * 1000,
+    enabled: !!favoritesId,
   });
