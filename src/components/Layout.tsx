@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import HomePageHeader from './HomePageHeader';
 import Header from './Header';
+import ScrollUpBtn from './ScrollUpBtn';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       >
         <Suspense fallback={null}>{children}</Suspense>
       </main>
+      <ScrollUpBtn />
     </div>
   );
 };

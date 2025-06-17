@@ -39,6 +39,8 @@
   --color-green-light: #38cd3e;
 
   --primary-transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-scaleIn: scaleIn var(--primary-transition);
+  --animate-scaleOut: scaleOut var(--primary-transition);
 }
 
 body {
@@ -215,6 +217,18 @@ body {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.9);
   }
 }
 
