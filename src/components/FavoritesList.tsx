@@ -8,13 +8,15 @@ export interface FavoritesListProps {
 
 const FavoritesList: FC<FavoritesListProps> = ({ favoritesData }) => {
   return (
-    <ul className="flex flex-col gap-8">
-      {favoritesData?.map(el => (
-        <li key={el.id}>
-          <Card {...el} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="flex flex-col gap-8">
+        {favoritesData?.map(el => (
+          <li key={el.id}>
+            <Card {...el} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

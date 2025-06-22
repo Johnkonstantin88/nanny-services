@@ -7,9 +7,10 @@ import clsx from 'clsx';
 
 export interface CardReviewsProps {
   reviews: IReview[];
+  handleModal: () => void;
 }
 
-export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
+export const CardReviews: FC<CardReviewsProps> = ({ reviews, handleModal }) => {
   const [isVisible, toggleVisibility] = useToggleVisibility();
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -56,6 +57,7 @@ export const CardReviews: FC<CardReviewsProps> = ({ reviews }) => {
           type="button"
           className="max-w-[215px] px-7 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
      bg-green-main rounded-[30px]"
+          onClick={handleModal}
         >
           Make an appointment
         </Button>

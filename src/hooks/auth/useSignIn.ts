@@ -5,13 +5,17 @@ import { UserCredential } from 'firebase/auth';
 import { ISignInDto, IUser } from '../../types/auth.types';
 import toast from 'react-hot-toast';
 import { auth } from '../../firebase/firestoreConfig';
-import { FIREBASE_COLLECTION, QUERY_KEY } from '../../constants';
+import {
+  FIREBASE_COLLECTION,
+  initialModalState,
+  QUERY_KEY,
+} from '../../constants';
 import { getDocument } from '../../firebase/services/docs';
 
 export const useSignIn = () => {
   const { setData } = useUserState();
   const queryClient = useQueryClient();
-  const { mutate: signInMutation } = useMutation<
+  const { mutate: signInMutation, isPending } = useMutation<
     UserCredential,
     unknown,
     ISignInDto,
@@ -29,6 +33,7 @@ export const useSignIn = () => {
       if (userData) {
         setData({ user: { ...userData }, isLoggedIn: true });
         queryClient.setQueryData([QUERY_KEY.favoritesId], userData.favorites);
+        queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
         toast(`Welcome, ${userData?.displayName}!`);
       }
     },
@@ -38,5 +43,5 @@ export const useSignIn = () => {
     },
   });
 
-  return signInMutation;
+  return [signInMutation, isPending] as const;
 };

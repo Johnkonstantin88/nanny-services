@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import HomePageHeader from './HomePageHeader';
 import Header from './Header';
 import ScrollUpBtn from './ScrollUpBtn';
+import Modal from './Modal';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       >
         <Suspense fallback={null}>{children}</Suspense>
       </main>
+      <Modal />
       <ScrollUpBtn />
     </div>
   );

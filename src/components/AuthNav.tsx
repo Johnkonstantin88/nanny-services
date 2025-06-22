@@ -1,29 +1,28 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import AuthModal from './AuthModal';
+import { IModalState } from '../types/query.types';
+import { QUERY_KEY } from '../constants';
 
 export interface AuthNavProps {}
 
 const AuthNav: FC<AuthNavProps> = () => {
   const location = useLocation();
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
+  const queryClient = useQueryClient();
 
-  const onOpenLoginModal = () => {
-    setIsLogin(true);
+  const loginModalHandler = () => {
+    queryClient.setQueryData([QUERY_KEY.modalState], (prev: IModalState) => ({
+      ...prev,
+      isLogin: true,
+    }));
   };
 
-  const onOpenRegisterModal = () => {
-    setIsRegister(true);
-  };
-
-  const onCloseLoginModal = () => {
-    setIsLogin(false);
-  };
-
-  const onCloseRegisterModal = () => {
-    setIsRegister(false);
+  const registerModalHandler = () => {
+    queryClient.setQueryData([QUERY_KEY.modalState], (prev: IModalState) => ({
+      ...prev,
+      isRegister: true,
+    }));
   };
 
   return (
@@ -33,7 +32,7 @@ const AuthNav: FC<AuthNavProps> = () => {
         className="font-medium leading-6 -tracking-1 
         px-[39px] py-3.5 border-button outline-transparent 
         hover:border-(--color-white-main) primary-transition"
-        onClick={onOpenLoginModal}
+        onClick={loginModalHandler}
       >
         Log in
       </button>
@@ -45,16 +44,10 @@ const AuthNav: FC<AuthNavProps> = () => {
             ? 'border border-transparent hover:bg-white-main hover:text-green-main primary-transition'
             : 'border-button hover:border-(--color-white-main) primary-transition'
         )}
-        onClick={onOpenRegisterModal}
+        onClick={registerModalHandler}
       >
         Registration
       </button>
-      <AuthModal
-        isLogin={isLogin}
-        isRegister={isRegister}
-        onCloseLoginModal={onCloseLoginModal}
-        onCloseRegisterModal={onCloseRegisterModal}
-      />
     </div>
   );
 };

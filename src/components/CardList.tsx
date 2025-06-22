@@ -8,13 +8,15 @@ export interface CardListProps {
 
 const CardList: FC<CardListProps> = ({ nanniesData }) => {
   return (
-    <ul className="flex flex-col gap-8">
-      {nanniesData?.map(el => (
-        <li key={el.id}>
-          <Card {...el} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="flex flex-col gap-8">
+        {nanniesData?.map(el => (
+          <li key={el.id}>
+            <Card {...el} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

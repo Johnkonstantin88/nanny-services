@@ -8,11 +8,17 @@ import toast from 'react-hot-toast';
 import { toggleFavorite } from '../firebase/services/docs';
 import calculateAge from '../utils/calculateAge';
 import replaceCharacters from '../utils/replaceCharacters';
-import { IDocument } from '../types/data.types';
+import { ICard } from '../types/data.types';
 import { favoritesIdOptions } from '../queryClient/queryOptions';
 import { QUERY_KEY } from '../constants';
+import { IModalState } from '../types/query.types';
 
-const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
+export interface ICardProps {
+  documentDetails: ICard;
+  id: string;
+}
+
+const Card: FC<ICardProps> = ({ documentDetails, id: cardId }) => {
   const {
     about,
     avatar_url,
@@ -54,6 +60,17 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
     toggleFavoriteHandler,
     isLoggedIn ? 300 : 2000
   );
+
+  const appointmentModalHandler = () => {
+    queryClient.setQueryData([QUERY_KEY.appointmentCreds], {
+      name,
+      avatar_url,
+    });
+    queryClient.setQueryData([QUERY_KEY.modalState], (prev: IModalState) => ({
+      ...prev,
+      isAppointment: true,
+    }));
+  };
 
   return (
     <div className="flex gap-6 p-6 bg-white-main rounded-3xl">
@@ -145,7 +162,10 @@ const Card: FC<IDocument> = ({ documentDetails, id: cardId }) => {
           <p className="font-roboto text-[16px] font-normal text-grey-text leading-6 w-[992px] tracking-0 ">
             {about}
           </p>
-          <CardReviews reviews={reviews} />
+          <CardReviews
+            reviews={reviews}
+            handleModal={appointmentModalHandler}
+          />
         </div>
       </div>
     </div>

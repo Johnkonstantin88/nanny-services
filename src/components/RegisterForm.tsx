@@ -1,22 +1,13 @@
 import { FC, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import Icon from './Icon';
+import Loader from './Loader';
 import { ISignUpDto } from '../types/auth.types';
 import { useSignUp } from '../hooks';
+import { registerSchema } from '../validation';
 
-export interface RegisterFormProps {
-  onCloseRegisterModal: () => void;
-}
-
-const schema = yup
-  .object({
-    displayName: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  })
-  .required();
+export interface RegisterFormProps {}
 
 const RegisterForm: FC<RegisterFormProps> = () => {
   const [isHidePassword, setIsHidePassword] = useState(true);
@@ -26,11 +17,11 @@ const RegisterForm: FC<RegisterFormProps> = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(registerSchema),
     resetOptions: { keepIsSubmitted: true },
   });
 
-  const signUp = useSignUp();
+  const [signUp, isPending] = useSignUp();
 
   const onSubmit: SubmitHandler<ISignUpDto> = data => signUp(data);
 
@@ -39,7 +30,8 @@ const RegisterForm: FC<RegisterFormProps> = () => {
   };
 
   return (
-    <div>
+    <>
+      {isPending && <Loader />}
       <h2 className="text-[40px] font-medium -tracking-2 leading-5 mb-5">
         Registration
       </h2>
@@ -50,7 +42,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
-          className="w-full border border-grey-input px-4.5 py-4 rounded-xl placeholder-black-main outline-none"
+          className="w-full form-input"
           {...register('displayName')}
           placeholder="Name"
         />
@@ -59,7 +51,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
         </p>
 
         <input
-          className="w-full border border-grey-input px-4.5 py-4 rounded-xl placeholder-black-main outline-none"
+          className="w-full form-input"
           {...register('email')}
           placeholder="Email"
         />
@@ -69,7 +61,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
 
         <div className="relative">
           <input
-            className=" w-full border border-grey-input px-4.5 py-4 rounded-xl placeholder-black-main outline-none"
+            className=" w-full form-input"
             {...register('password')}
             placeholder="Password"
             type={isHidePassword ? 'password' : 'text'}
@@ -100,7 +92,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           Sigh Up
         </button>
       </form>
-    </div>
+    </>
   );
 };
 

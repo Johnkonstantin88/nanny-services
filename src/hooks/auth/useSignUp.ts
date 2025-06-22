@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserState } from '../../state/user';
 import { signUp } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
@@ -6,12 +6,17 @@ import { ISignUpDto, IUser } from '../../types/auth.types';
 import toast from 'react-hot-toast';
 import { getDocument, setFirebaseUserDoc } from '../../firebase/services/docs';
 import { auth } from '../../firebase/firestoreConfig';
-import { FIREBASE_COLLECTION } from '../../constants';
+import {
+  FIREBASE_COLLECTION,
+  initialModalState,
+  QUERY_KEY,
+} from '../../constants';
 
 export const useSignUp = () => {
   const { setData } = useUserState();
+  const queryClient = useQueryClient();
 
-  const { mutate: signUpMutation } = useMutation<
+  const { mutate: signUpMutation, isPending } = useMutation<
     UserCredential,
     unknown,
     ISignUpDto,
@@ -36,6 +41,7 @@ export const useSignUp = () => {
       );
       if (userData) {
         setData({ user: { ...userData }, isLoggedIn: true });
+        queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
         toast('User registration was successful!');
       }
     },
@@ -45,5 +51,5 @@ export const useSignUp = () => {
     },
   });
 
-  return signUpMutation;
+  return [signUpMutation, isPending] as const;
 };
