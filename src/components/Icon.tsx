@@ -10,7 +10,7 @@ export interface IconProps {
 const Icon: FC<IconProps> = ({ name, className, width, height }) => {
   return (
     <svg className={className} width={width} height={height}>
-      <use href={`/public/sprite.svg#${name}`}></use>
+      <use href={`/sprite.svg#${name}`}></use>
     </svg>
   );
 };
