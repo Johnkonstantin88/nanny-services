@@ -8,13 +8,24 @@ export default defineConfig({
     react(),
     tailwindcss(),
     ViteImageOptimizer({
+      test: /\.(jpe?g|png|gif)$/i,
+      exclude: ['sprite.svg'],
+      include: undefined,
       includePublic: true,
+      logStats: true,
+      ansiColors: true,
       png: {
+        quality: 75,
+      },
+      jpeg: {
         quality: 75,
       },
       jpg: {
         quality: 75,
       },
+      gif: {},
+      cache: false,
+      cacheLocation: undefined,
     }),
   ],
   build: {
