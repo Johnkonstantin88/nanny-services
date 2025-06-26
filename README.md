@@ -1,9 +1,9 @@
 ## Desktop version of the application
-**The following technologies were used:**
-React + TypeScript + Vite;  
-TanSTack Query as state manager;  
-Firebase Firestore as backend;  
-Tailwind CSS.
+**The following technologies were used:**  
+  React + TypeScript + Vite;  
+  TanSTack Query as state manager;  
+  Firebase Firestore as backend;  
+  Tailwind CSS.
 
 ### Technical task:
 ***https://docs.google.com/document/d/19ugM1gvOw81nCyALr4EZs3dmv6OfJm94VjupcytbnJY/edit?tab=t.0***
