@@ -31,8 +31,8 @@ const HomePage: FC<HomePageProps> = () => {
             </p>
             <NavLink
               to={'/nannies'}
-              className="flex max-w-[237px] gap-4.5 justify-center items-baseline 
-         px-12.5 py-4.5 text-xl font-medium leading-5 -tracking-1 
+              className="flex max-w-[235px] h-15 gap-4.5 items-center
+         px-12.5 py-4.5 text-xl font-normal leading-5 -tracking-1 
          border-button primary-transition  hover:border-(--color-white-main)"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
