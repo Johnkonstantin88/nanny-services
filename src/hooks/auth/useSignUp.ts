@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUserState } from '../../state/user';
+import toast from 'react-hot-toast';
+import { auth } from '../../firebase/firestoreConfig';
 import { signUp } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
-import { ISignUpDto, IUser } from '../../types/auth.types';
-import toast from 'react-hot-toast';
 import { getDocument, setFirebaseUserDoc } from '../../firebase/services/docs';
-import { auth } from '../../firebase/firestoreConfig';
+import { useUserState } from '../../state/user';
+import { resetBodyPadding } from '../../utils/resetBodyPadding';
+import { ISignUpDto, IUser } from '../../types/auth.types';
 import {
   FIREBASE_COLLECTION,
   initialModalState,
@@ -42,6 +43,7 @@ export const useSignUp = () => {
       if (userData) {
         setData({ user: { ...userData }, isLoggedIn: true });
         queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
+        resetBodyPadding();
         toast('User registration was successful!');
       }
     },

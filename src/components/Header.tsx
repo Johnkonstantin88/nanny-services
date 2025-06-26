@@ -46,7 +46,7 @@ const Header: FC<HeaderProps> = () => {
   return isRestoring ? (
     <p className="text-center">Refreshing...</p>
   ) : (
-    <header className="relative bg-green-main">
+    <header className="relative bg-green-main w-full">
       {isOpen && <span style={after}></span>}
       <div className="header-container font-roboto">
         <p className="text-2xl font-medium leading-4 -tracking-2">

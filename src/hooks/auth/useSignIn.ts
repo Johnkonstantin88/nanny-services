@@ -1,16 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUserState } from '../../state/user';
+import toast from 'react-hot-toast';
 import { signIn } from '../../firebase/services/auth';
 import { UserCredential } from 'firebase/auth';
-import { ISignInDto, IUser } from '../../types/auth.types';
-import toast from 'react-hot-toast';
 import { auth } from '../../firebase/firestoreConfig';
+import { getDocument } from '../../firebase/services/docs';
+import { useUserState } from '../../state/user';
+import { resetBodyPadding } from '../../utils/resetBodyPadding';
+import { ISignInDto, IUser } from '../../types/auth.types';
 import {
   FIREBASE_COLLECTION,
   initialModalState,
   QUERY_KEY,
 } from '../../constants';
-import { getDocument } from '../../firebase/services/docs';
 
 export const useSignIn = () => {
   const { setData } = useUserState();
@@ -34,6 +35,7 @@ export const useSignIn = () => {
         setData({ user: { ...userData }, isLoggedIn: true });
         queryClient.setQueryData([QUERY_KEY.favoritesId], userData.favorites);
         queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
+        resetBodyPadding();
         toast(`Welcome, ${userData?.displayName}!`);
       }
     },

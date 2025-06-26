@@ -1,10 +1,11 @@
 import { FC, useRef } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ReactModal from 'react-modal';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import AppointmentForm from './AppointmentForm';
 import Icon from './Icon';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { resetBodyPadding } from '../utils/resetBodyPadding';
 import { IModalState } from '../types/query.types';
 import { initialModalState, QUERY_KEY } from '../constants';
 import { useLocation } from 'react-router-dom';
@@ -74,8 +75,7 @@ const Modal: FC = () => {
   const onCloseModal = () => {
     queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
     setTimeout(() => {
-      document.body.style.overflowY = 'scroll';
-      document.body.style.paddingRight = '0px';
+      resetBodyPadding();
     }, 250);
   };
 
