@@ -9,6 +9,7 @@ export const useGetNanniesData = () => {
   const selectValue: string | undefined = queryClient.getQueryData([
     QUERY_KEY.filters,
   ]);
+
   const lastVisibleDoc: DocumentData | undefined = queryClient.getQueryData([
     QUERY_KEY.lastVisibleDoc,
     selectValue,
@@ -23,7 +24,6 @@ export const useGetNanniesData = () => {
     if (selectValue)
       queryClient.setQueryData(
         [QUERY_KEY.lastVisibleDoc, selectValue],
-
         lastVisible
       );
 

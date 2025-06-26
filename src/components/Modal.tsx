@@ -1,12 +1,13 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import ReactModal from 'react-modal';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import AppointmentForm from './AppointmentForm';
 import Icon from './Icon';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { IModalState } from '../types/query.types';
 import { initialModalState, QUERY_KEY } from '../constants';
-import AppointmentForm from './AppointmentForm';
+import { useLocation } from 'react-router-dom';
 
 const overlay = {
   height: '100vh',
@@ -34,12 +35,18 @@ const authModalStyles = {
 
 const appointmentModalStyles = {
   overlay,
-  content: { ...content, width: '620px', height: '720px' },
+  content: {
+    ...content,
+    width: '620px',
+    height: '720px',
+  },
 };
 
 ReactModal.setAppElement('#root');
 
 const Modal: FC = () => {
+  const location = useLocation();
+  const paddingOffsetRef = useRef<number>(0);
   const queryClient = useQueryClient();
   const { data: modalData } = useQuery({
     queryKey: [QUERY_KEY.modalState],
@@ -52,15 +59,32 @@ const Modal: FC = () => {
 
   const { isAppointment, isLogin, isRegister } = modalData || initialModalState;
 
+  const paddingOffset = window.innerWidth - document.body.clientWidth;
+  paddingOffsetRef.current = paddingOffset;
+
+  const onAfterOpen = () => {
+    if (paddingOffsetRef.current && location.pathname !== '/') {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${paddingOffsetRef.current}px`;
+    } else {
+      document.body.style.overflowY = 'scroll';
+    }
+  };
+
   const onCloseModal = () => {
     queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
+    setTimeout(() => {
+      document.body.style.overflowY = 'scroll';
+      document.body.style.paddingRight = '0px';
+    }, 250);
   };
 
   return (
     <>
       <ReactModal
         isOpen={isAppointment}
-        closeTimeoutMS={200}
+        closeTimeoutMS={250}
+        onAfterOpen={() => onAfterOpen()}
         onRequestClose={onCloseModal}
         style={appointmentModalStyles}
         ariaHideApp={false}
@@ -73,7 +97,8 @@ const Modal: FC = () => {
       </ReactModal>
       <ReactModal
         isOpen={isLogin}
-        closeTimeoutMS={200}
+        closeTimeoutMS={250}
+        onAfterOpen={() => onAfterOpen()}
         onRequestClose={onCloseModal}
         style={authModalStyles}
         ariaHideApp={false}
@@ -86,7 +111,8 @@ const Modal: FC = () => {
       </ReactModal>
       <ReactModal
         isOpen={isRegister}
-        closeTimeoutMS={200}
+        closeTimeoutMS={250}
+        onAfterOpen={() => onAfterOpen()}
         onRequestClose={onCloseModal}
         style={authModalStyles}
         ariaHideApp={false}

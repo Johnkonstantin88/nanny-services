@@ -12,7 +12,7 @@ const HomePageHeader: FC<HomePageHeaderProps> = () => {
   const isRestoring = useIsRestoring();
 
   return isRestoring ? (
-    <p>Refreshing...</p>
+    <p className="text-center">Refreshing...</p>
   ) : (
     <header className="home-header-container font-roboto">
       <p className="text-2xl font-medium leading-4 -tracking-2">

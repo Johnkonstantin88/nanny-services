@@ -75,31 +75,33 @@ const NanniesPage: FC = () => {
   return (
     <>
       <title>Nannies</title>
-      <section className="section-container">
-        <NanniesFilters
-          onChange={selected => handleSelectChange(selected)}
-          selectValue={filters}
-        />
-        {isFetching && <Loader />}
-        {isError && !nanniesData ? (
-          <h2 className="text-center text-2xl text-red-border font-medium leading-3 font-roboto">
-            Something gone wrong. Please, try again later.
-          </h2>
-        ) : (
-          <CardList nanniesData={nanniesData} />
-        )}
-        {totalDocs && nanniesData && totalDocs > nanniesData.length && (
-          <Button
-            type="button"
-            className="block max-w-[159px] px-10 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
+      <main className="pt-16 pb-25 font-helvetica-neue">
+        <section className="section-container">
+          <NanniesFilters
+            onChange={selected => handleSelectChange(selected)}
+            selectValue={filters}
+          />
+          {isFetching && <Loader />}
+          {isError && !nanniesData ? (
+            <h2 className="text-center text-2xl text-red-border font-medium leading-3 font-roboto">
+              Something gone wrong. Please, try again later.
+            </h2>
+          ) : (
+            <CardList nanniesData={nanniesData} />
+          )}
+          {totalDocs && nanniesData && totalDocs > nanniesData.length && (
+            <Button
+              type="button"
+              className="block max-w-[159px] px-10 py-3.5 text-[16px] text-white-main font-normal -tracking-1 leading-6
     bg-green-main rounded-[30px] mx-auto mt-16"
-            onClick={handleLoadMoreClick}
-            disabled={isFetching ? true : false}
-          >
-            Load more
-          </Button>
-        )}
-      </section>
+              onClick={handleLoadMoreClick}
+              disabled={isFetching ? true : false}
+            >
+              Load more
+            </Button>
+          )}
+        </section>
+      </main>
     </>
   );
 };

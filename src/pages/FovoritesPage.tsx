@@ -9,7 +9,6 @@ import FavoritesList from '../components/FavoritesList';
 import { QUERY_KEY } from '../constants';
 import { IDocument } from '../types/data.types';
 import Loader from '../components/Loader';
-// import NanniesFilters from '../components/NanniesFilters';
 
 export interface FavoritesPageProps {}
 
@@ -31,17 +30,18 @@ const FavoritesPage: FC<FavoritesPageProps> = () => {
   return (
     <>
       <title>Favorites</title>
-      <section className="section-container ">
-        {/* <NanniesFilters /> */}
-        {isFetching && <Loader />}
-        {favoritesData && favoritesData?.length > 0 ? (
-          <FavoritesList favoritesData={favoritesData as IDocument[]} />
-        ) : (
-          <h2 className="text-center text-2xl text-grey-text-main font-medium leading-3 font-roboto">
-            There is no favorites yet.
-          </h2>
-        )}
-      </section>
+      <main className="pt-16 pb-25 font-helvetica-neue">
+        <section className="section-container ">
+          {isFetching && <Loader />}
+          {favoritesData && favoritesData?.length > 0 ? (
+            <FavoritesList favoritesData={favoritesData as IDocument[]} />
+          ) : (
+            <h2 className="text-center text-2xl text-grey-text-main font-medium leading-3 font-roboto">
+              There is no favorites yet.
+            </h2>
+          )}
+        </section>
+      </main>
     </>
   );
 };
