@@ -74,9 +74,7 @@ const Modal: FC = () => {
 
   const onCloseModal = () => {
     queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
-    setTimeout(() => {
-      resetBodyPadding();
-    }, 250);
+    resetBodyPadding();
   };
 
   return (

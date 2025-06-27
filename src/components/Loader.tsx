@@ -10,6 +10,7 @@ const override: CSSProperties = {
   display: 'block',
   margin: '0 auto',
   zIndex: 999,
+  transform: 'translate(-50%, -50%)',
 };
 
 const Loader: FC<LoaderProps> = () => {
