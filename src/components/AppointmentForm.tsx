@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import AppointmentSelect from './AppointmentSelect';
+import { resetBodyPadding } from '../utils/resetBodyPadding';
 import toast from 'react-hot-toast';
 import {
   appointmentSelectOptions,
@@ -31,6 +32,7 @@ const AppointmentForm = () => {
   const onSubmit = (data: unknown) => {
     console.log(data);
     queryClient.setQueryData([QUERY_KEY.modalState], initialModalState);
+    resetBodyPadding();
     toast.success(
       `Great! ${
         nannieCreds?.name.split(' ')[0] || 'babysitter'
